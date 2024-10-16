@@ -14,13 +14,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $query = Project::query();
+        try {
+            $projects = Project::paginate(10)->onEachSide(1);
 
-        $projects = $query->paginate(10)->onEachSide(1);
+            return inertia("Project/Index", [
+                "projects" => ProjectResource::collection($projects),
+            ]);
+        } catch (\Exception $e) {
 
-        return inertia("Project/Index", [
-            "projects" => ProjectResource::collection($projects),
-        ]);
+            return response()->json(['error' => 'Failed to fetch projects'], 500);
+        }
     }
 
     /**
@@ -28,7 +31,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+  
     }
 
     /**
@@ -36,7 +39,7 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+ 
     }
 
     /**
@@ -44,7 +47,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+  
     }
 
     /**
@@ -52,7 +55,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+
     }
 
     /**
@@ -60,7 +63,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+
     }
 
     /**
@@ -68,6 +71,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+
     }
 }
