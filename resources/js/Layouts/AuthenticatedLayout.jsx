@@ -28,7 +28,25 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+                                    Главная
+                                </NavLink>
+                                <NavLink
+                                    href={route('project.index')}
+                                    active={route().current('project.index')}
+                                >
+                                    Проекты
+                                </NavLink>
+                                <NavLink
+                                    href={route('task.index')}
+                                    active={route().current('task.index')}
+                                >
+                                    Все поправки
+                                </NavLink>
+                                <NavLink
+                                    href={route('user.index')}
+                                    active={route().current('user.index')}
+                                >
+                                    Пользователи
                                 </NavLink>
                             </div>
                         </div>
