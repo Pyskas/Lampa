@@ -4,8 +4,9 @@ import {
     PROJECT_STATUS_CLASS_MAP, 
     PROJECT_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
+import TasksTable from "../Task/TasksTable";
 
-export default function Show({ auth,project}) {
+export default function Show({ auth,project, tasks, queryParams}) {
     return (
         <AuthenticatedLayout
         user={auth.user} header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">{`Проект "${project.name}"`}</h2>}
@@ -75,11 +76,11 @@ export default function Show({ auth,project}) {
                         </div>
                         </div>
 
-                        <div className="py-12">
+                        <div className="pb-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                           Правки будут здесь
+                            <TasksTable tasks={tasks} queryParams={queryParams} hideProjectColumn={true}/>
                         </div>
                         </div>
                         </div>
