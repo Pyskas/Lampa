@@ -1,12 +1,21 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import TasksTable from "./TasksTable";
 
 export default function Index({ auth, tasks, queryParams = null }) {
  
     
     return (
-        <AuthenticatedLayout user={auth.user} header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Правки</h2>}>
+        <AuthenticatedLayout user={auth.user} header={ 
+        <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Правки
+        </h2>
+        <Link href={route("task.create")} className="px-3 py-1 text-white transition-all rounded shadow bg bg-emerald-500 hover:bg-emerald-600">
+        Добавить новый
+        </Link>
+        </div>
+    }
+    >
             <Head title="Задачи" />
 
             <div className="py-12">

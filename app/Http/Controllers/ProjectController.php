@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -103,7 +104,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        // Ваш код для редактирования проекта
+        return inertia('Project/Edit', [
+            'project' => new ProjectResource($project),
+        ]);
     }
 
     /**
@@ -111,7 +114,19 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        // Ваш код для обновления проекта
+        $data = $request->validated();
+
+        $image = $data['image'] ?? null;
+        $data['updated_by'] = Auth::id();
+        if ($image){
+            if($project->image_path) {
+                Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+            }
+            $data['image_path'] = $image->store('project/'.Str::random(), 'public');
+        }
+        $project->update($data);
+
+        return to_route('project.index')->with('success', "Проект \"$project->name\" обновлен");
     }
 
     /**
@@ -119,6 +134,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        // Ваш код для удаления проекта
+        $name = $project->name;
+        $project->delete();
+        if($project->image_path) {
+            Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+        }
+        return to_route('project.index')->with('success',"Проект \"$name\" удален");
     }
 }
