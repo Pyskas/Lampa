@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TaskResource;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
 
 class TaskController extends Controller
 {
@@ -37,6 +41,7 @@ class TaskController extends Controller
             return inertia("Task/Index", [
                 "tasks" => TaskResource::collection($tasks),
                 'queryParams' => request()->query() ?: null,
+                'success' => session('success'),
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch tasks'], 500);
@@ -48,7 +53,12 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return \inertia("Task/Create");
+        $projects = Project::query()->orderBy('name', 'asc')->get();
+        $users = User::query()->orderBy('name', 'asc')->get();
+        return \inertia("Task/Create", [
+            'projects' => ProjectResource::collection($projects),
+            'users' => UserResource::collection($users),
+        ]);
     }
 
     /**
@@ -73,26 +83,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $query = $task->tasks();
-
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
-
-        if (request("name")) {
-            $query->where("name", "like", "%" . request("name") . "%");
-        }
-        if (request("status")) {
-            $query->where("status", request("status"));
-        }
-
-        $tasks = $query->orderBy($sortField, $sortDirection)
-        ->paginate(10)
-        ->onEachSide(1);
-
         return \inertia('Task/Show', [
             'task'=> new TaskResource($task),
-            "tasks" => TaskResource::collection($tasks),
-            'queryParams' => request()->query() ?: null,
         ]);
     }
 
@@ -101,8 +93,12 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return inertia('Task/Edit', [
+        $projects = Project::query()->orderBy('name', 'asc')->get();
+        $users = User::query()->orderBy('name', 'asc')->get();
+        return \inertia("Task/Edit", [
             'task' => new TaskResource($task),
+            'projects' => ProjectResource::collection($projects),
+            'users' => UserResource::collection($users),
         ]);
     }
 
@@ -137,5 +133,35 @@ class TaskController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($task->image_path));
         }
         return to_route('task.index')->with('success',"Правка \"$name\" удалена");
+    }
+
+    public function myTasks()
+    {
+        try {
+            $user = auth()->user();
+            $query = Task::query()->where('assigned_user_id', $user->id);
+
+            $sortField = request("sort_field", 'created_at');
+            $sortDirection = request("sort_direction", "desc");
+
+            if (request("name")) {
+                $query->where("name", "like", "%" . request("name") . "%");
+            }
+            if (request("status")) {
+                $query->where("status", request("status"));
+            }
+
+            $tasks = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+            return inertia("Task/Index", [
+                "tasks" => TaskResource::collection($tasks),
+                'queryParams' => request()->query() ?: null,
+                'success' => session('success'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch tasks'], 500);
+        }
     }
 }

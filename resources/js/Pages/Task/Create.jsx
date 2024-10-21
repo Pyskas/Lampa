@@ -6,7 +6,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, Link  } from "@inertiajs/react";
 import SelectInput from "@/Components/SelectInput";
 
-export default function Create({auth}) {
+export default function Create({auth, projects, users }) {
     const {data, setData, post, errors, reset} = useForm({
         image: '',
         name: '',
@@ -40,7 +40,7 @@ export default function Create({auth}) {
                  className="p-4 bg-white shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <div>
                         <InputLabel htmlFor="task_project_id" 
-                        value="Приоритет правки"
+                        value="Проект"
                         />
                         <SelectInput
                         name="project_id"
@@ -48,8 +48,10 @@ export default function Create({auth}) {
                         className="block w-full mt-1"
                         onChange={(e) => setData("project_id", e.target.value)}
                         >
-                            <option value="">Проект</option>
-                            <option value="low">Занимается</option>
+                            <option value="">Выбрать проект</option>
+                            {projects.data.map(project => (
+                                <option value={project.id} key={project.id}>{project.name}</option>
+                            ))}
                         </SelectInput>
 
                         <InputError message={errors.project_id}
@@ -157,13 +159,15 @@ export default function Create({auth}) {
                         value="Назначенные пользователи"
                         />
                         <SelectInput
-                        name="task_project_id"
+                        name="assigned_user_id"
                         id="task_assigned_user"
                         className="block w-full mt-1"
                         onChange={(e) => setData("assigned_user_id", e.target.value)}
                         >
-                            <option value="">Приоритет проекта</option>
-                            <option value="">Делает</option>
+                            <option value="">Выбрать пользователя</option>
+                            {users.data.map(user => (
+                                <option value={user.id} key={user.id}>{user.name}</option>
+                            ))}
                         </SelectInput>
 
                         <InputError message={errors.assigned_user_id}
