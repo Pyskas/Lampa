@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-import { 
-    PROJECT_STATUS_CLASS_MAP, 
+import {
+    PROJECT_STATUS_CLASS_MAP,
     PROJECT_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
 import TasksTable from "../Task/TasksTable";
@@ -14,7 +14,7 @@ export default function Show({ auth, success, project, tasks, queryParams}) {
             Редактировать
             </Link>
         </div>
-    
+
     }
         >
             <Head title={`Проект "${project.name}"`} />
@@ -35,7 +35,7 @@ export default function Show({ auth, success, project, tasks, queryParams}) {
                                         <label className="text-lg font-bold">ID Проекта:</label>
                                         <p className="mt-1">{project.id}</p>
                                     </div>
-                                    
+
                                     <div className="mt-4">
                                         <label className="text-lg font-bold">Название проекта:</label>
                                         <p className="mt-1">{project.name}</p>
@@ -59,7 +59,7 @@ export default function Show({ auth, success, project, tasks, queryParams}) {
                                 </div>
                                 <div>
                                     <div>
-                                        <label className="text-lg font-bold">Дедлайн</label>
+                                        <label className="text-lg font-bold">Окончание</label>
                                         <p className="mt-1">{project.due_date}</p>
                                     </div>
                                     <div className="mt-4">
@@ -72,7 +72,7 @@ export default function Show({ auth, success, project, tasks, queryParams}) {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="mt-4">
                                 <label className="text-lg font-bold">Описание проекта</label>
                                 <p className="mt-1">{project.description}</p>

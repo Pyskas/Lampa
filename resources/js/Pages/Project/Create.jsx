@@ -7,6 +7,7 @@ import { Head, useForm, Link  } from "@inertiajs/react";
 import SelectInput from "@/Components/SelectInput";
 
 export default function Create({auth}) {
+
     const {data, setData, post, errors, reset} = useForm({
         image: '',
         name: '',
@@ -17,17 +18,34 @@ export default function Create({auth}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route('project.store'));
     }
-    
+
+    if (auth.user.role === 'user') {
+      return (
+          <AuthenticatedLayout user={auth.user}>
+              <Head title="Ошибка доступа" />
+              <div className="py-12">
+                  <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                      <div className="overflow-hidden bg-red-100 shadow-sm sm:rounded-lg">
+                          <div className="p-6 text-red-700">
+                              У вас нет доступа к этой странице.
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </AuthenticatedLayout>
+      );
+  }
+
     return (
         <AuthenticatedLayout
-        user={auth.user} 
+        user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Создать новый проект</h2>
-            
+
             </div>
         }
         >
@@ -39,11 +57,11 @@ export default function Create({auth}) {
                 <form onSubmit={onSubmit}
                  className="p-4 bg-white shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <div>
-                        <InputLabel 
-                        htmlFor="project_image_path" 
-                        value="Фото Проекта" 
+                        <InputLabel
+                        htmlFor="project_image_path"
+                        value="Фото Проекта ✩"
                         />
-                        <TextInput 
+                        <TextInput
                         id="project_image_path"
                          type="file"
                           name="image"
@@ -53,7 +71,7 @@ export default function Create({auth}) {
                          <InputError message={errors.image} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="project_name" value="Название проекта"/>
+                        <InputLabel htmlFor="project_name" value="Название проекта ✩"/>
                         <TextInput
                         id="project_name"
                         type="text"
@@ -69,7 +87,7 @@ export default function Create({auth}) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="project_description"
-                        value="Описание проекта"
+                        value="Описание проекта ✩"
                         />
                         <TextAreaInput
                         id="project_description"
@@ -84,9 +102,9 @@ export default function Create({auth}) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="project_due_date"
-                        value="Дедлайн"
+                        value="Окончание"
                         />
-                        
+
                         <TextInput
                         id="project_due_date"
                         type="date"
@@ -98,7 +116,7 @@ export default function Create({auth}) {
                         <InputError message={errors.due_date} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="project_status" 
+                        <InputLabel htmlFor="project_status"
                         value="Статус Проекта"
                         />
                         <SelectInput

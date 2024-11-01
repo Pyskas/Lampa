@@ -36,18 +36,25 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Проекты
                                 </NavLink>
+
+                                {user.role === 'admin' && (
                                 <NavLink
                                     href={route('task.index')}
                                     active={route().current('task.index')}
                                 >
                                     Все правки
                                 </NavLink>
-                                <NavLink
-                                    href={route('user.index')}
-                                    active={route().current('user.index')}
-                                >
-                                    Пользователи
-                                </NavLink>
+                                )}
+
+                                {user.role === 'admin' && (
+                                    <NavLink
+                                        href={route('user.index')}
+                                        active={route().current('user.index')}
+                                    >
+                                        Пользователи
+                                    </NavLink>
+                                )}
+
                                 <NavLink
                                     href={route('task.myTasks')}
                                     active={route().current('task.myTasks')}

@@ -17,17 +17,17 @@ export default function Create({auth, projects, users }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route('task.store'));
     }
-    
+
     return (
         <AuthenticatedLayout
-        user={auth.user} 
+        user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Создать новую заметку</h2>
-            
+
             </div>
         }
         >
@@ -39,8 +39,8 @@ export default function Create({auth, projects, users }) {
                 <form onSubmit={onSubmit}
                  className="p-4 bg-white shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <div>
-                        <InputLabel htmlFor="task_project_id" 
-                        value="Проект"
+                        <InputLabel htmlFor="task_project_id"
+                        value="Проект ✩"
                         />
                         <SelectInput
                         name="project_id"
@@ -58,11 +58,11 @@ export default function Create({auth, projects, users }) {
                         className="mt-2" />
                     </div>
                     <div>
-                        <InputLabel 
-                        htmlFor="task_image_path" 
-                        value="Фото Правкаа" 
+                        <InputLabel
+                        htmlFor="task_image_path"
+                        value="Фото Правки ✩"
                         />
-                        <TextInput 
+                        <TextInput
                         id="task_image_path"
                          type="file"
                           name="image"
@@ -72,7 +72,7 @@ export default function Create({auth, projects, users }) {
                          <InputError message={errors.image} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_name" value="Название правкаа"/>
+                        <InputLabel htmlFor="task_name" value="Название правки ✩"/>
                         <TextInput
                         id="task_name"
                         type="text"
@@ -88,7 +88,7 @@ export default function Create({auth, projects, users }) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="task_description"
-                        value="Описание правкаа"
+                        value="Описание правка ✩"
                         />
                         <TextAreaInput
                         id="task_description"
@@ -103,9 +103,9 @@ export default function Create({auth, projects, users }) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="task_due_date"
-                        value="Дедлайн"
+                        value="Окончание"
                         />
-                        
+
                         <TextInput
                         id="task_due_date"
                         type="date"
@@ -117,8 +117,8 @@ export default function Create({auth, projects, users }) {
                         <InputError message={errors.due_date} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_status" 
-                        value="Статус Правкаа"
+                        <InputLabel htmlFor="task_status"
+                        value="Статус Правки"
                         />
                         <SelectInput
                         name="status"
@@ -129,14 +129,13 @@ export default function Create({auth, projects, users }) {
                             <option value="">Выберите статус</option>
                             <option value="pending">Рассматривается</option>
                             <option value="in_progress">В процессе</option>
-                            <option value="completed">Завершенные</option>
                         </SelectInput>
 
                         <InputError message={errors.task_status}
                         className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_priority" 
+                        <InputLabel htmlFor="task_priority"
                         value="Приоритет правки"
                         />
                         <SelectInput
@@ -155,8 +154,8 @@ export default function Create({auth, projects, users }) {
                         className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_assigned_user" 
-                        value="Назначенные пользователи"
+                        <InputLabel htmlFor="task_assigned_user"
+                        value="Назначенные пользователи ✩"
                         />
                         <SelectInput
                         name="assigned_user_id"

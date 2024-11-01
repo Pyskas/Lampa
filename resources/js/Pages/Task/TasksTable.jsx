@@ -2,8 +2,8 @@ import TableHeading from "@/Components/TableHeading";
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
-import { 
-    TASK_STATUS_CLASS_MAP, 
+import {
+    TASK_STATUS_CLASS_MAP,
     TASK_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
 import { Link, router } from "@inertiajs/react";
@@ -19,10 +19,10 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
 
         router.get(route('task.index'), queryParams)
         };
-    
+
         const onKeyPress = (name, e) => {
             if (e.key !== 'Enter') return;
-            
+
             searchFieldChanged(name, e.target.value);
         };
 
@@ -41,13 +41,13 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
         };
 
         const deleteTask = (task) => {
-            if(!window.confirm('Вы уверены что хотите удалить правку?')) 
+            if(!window.confirm('Вы уверены что хотите удалить правку?'))
                 {
                 return;
             }
             router.delete(route('task.destroy', task.id));
         }
-    
+
     return (
         <>
         {success && (
@@ -58,30 +58,30 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
                                  <div className="overflow-auto"> <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                                 <thead className="text-xs text-gray-700 uppercase border-b-2 border-gray-500 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr className="text-nowrap">
-                                        <TableHeading name="id" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="id" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >ID</TableHeading>
                                         <th className="px-3 py-3">Изображение</th>
                                         {!hideProjectColumn && (
                                             <th className="px-3 py-3">Название проекта</th>
                                         )}
-                                        <TableHeading name="name" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="name" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Название</TableHeading>
-                                        <TableHeading name="status" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="status" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Статус</TableHeading>
-                                        <TableHeading name="created_at" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="created_at" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Создан</TableHeading>
-                                        <TableHeading name="due_date" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="due_date" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
-                                        >Дедлайн</TableHeading>
+                                        >Окончание</TableHeading>
                                         <th className="px-3 py-3">Создано</th>
                                         <th className="px-3 py-3 text-right">Действия</th>
                                     </tr>
@@ -90,7 +90,7 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
                                         <th className="px-3 py-3"></th>
                                         {!hideProjectColumn && (<th className="px-3 py-3"></th>) }
                                         <th className="px-3 py-3">
-                                            <TextInput 
+                                            <TextInput
                                             className="w-full"
                                             defaultValue={queryParams.name}
                                             placeholder="Название правки"
@@ -99,7 +99,7 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
                                             />
                                         </th>
                                         <th className="px-3 py-3">
-                                            <SelectInput className="w-full" defaultValue={queryParams.status} onChange={e => searchFieldChanged('status', e.target.value)  
+                                            <SelectInput className="w-full" defaultValue={queryParams.status} onChange={e => searchFieldChanged('status', e.target.value)
                                             }
                                             >
                                                 <option value="">Выбрать статус</option>
@@ -114,7 +114,7 @@ export default function TasksTable({tasks, success, queryParams = null, hideProj
                                         <th className="px-3 py-3"></th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     {tasks.data.map(task => (
                                         <tr key={task.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">

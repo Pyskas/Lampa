@@ -15,10 +15,10 @@ export default function Index({ auth, users, queryParams = null, success }) {
 
         router.get(route('user.index'), queryParams)
         };
-    
+
         const onKeyPress = (name, e) => {
             if (e.key !== 'Enter') return;
-            
+
             searchFieldChanged(name, e.target.value);
         };
 
@@ -37,15 +37,32 @@ export default function Index({ auth, users, queryParams = null, success }) {
         };
 
         const deleteUser = (user) => {
-            if(!window.confirm('Вы уверены что хотите удалить Пользователя?')) 
+            if(!window.confirm('Вы уверены что хотите удалить Пользователя?'))
                 {
                 return;
             }
             router.delete(route('user.destroy', user.id));
         }
-    
+
+
+        if (auth.user.role !== 'admin') {
+          return (
+              <AuthenticatedLayout user={auth.user}>
+                  <Head title="Доступ запрещен" />
+                  <div className="py-12">
+                      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                          <div className="p-6 bg-red-100 border border-red-400 text-red-700 rounded dark:bg-red-800 dark:text-red-200">
+                              <h2 className="text-lg font-semibold">Ошибка доступа</h2>
+                              <p>Пожалуйста, обратитесь к руководителю, если вам необходим доступ.</p>
+                          </div>
+                      </div>
+                  </div>
+              </AuthenticatedLayout>
+          );
+      }
+
     return (
-        <AuthenticatedLayout user={auth.user} 
+        <AuthenticatedLayout user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Пользователь</h2>
@@ -68,20 +85,20 @@ export default function Index({ auth, users, queryParams = null, success }) {
                            <div className="overflow-auto"> <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                                 <thead className="text-xs text-gray-700 uppercase border-b-2 border-gray-500 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr className="text-nowrap">
-                                        <TableHeading name="id" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="id" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >ID</TableHeading>
-                                        <TableHeading name="name" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="name" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Имя</TableHeading>
-                                        <TableHeading name="email" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="email" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Email</TableHeading>
-                                        <TableHeading name="created_at" sort_field={queryParams.sort_field} 
-                                        sort_direction={queryParams.sort_direction} 
+                                        <TableHeading name="created_at" sort_field={queryParams.sort_field}
+                                        sort_direction={queryParams.sort_direction}
                                         sortChanged={sortChanged}
                                         >Создан</TableHeading>
                                         <th className="px-3 py-3 text-right">Действия</th>
@@ -89,7 +106,7 @@ export default function Index({ auth, users, queryParams = null, success }) {
                                     <tr className="text-nowrap">
                                         <th className="px-3 py-3"></th>
                                         <th className="px-3 py-3">
-                                            <TextInput 
+                                            <TextInput
                                             className="w-full"
                                             defaultValue={queryParams.name}
                                             placeholder="Имя Пользователя"
@@ -98,19 +115,19 @@ export default function Index({ auth, users, queryParams = null, success }) {
                                             />
                                         </th>
                                         <th className="px-3 py-3">
-                                        <TextInput 
+                                        <TextInput
                                             className="w-full"
                                             defaultValue={queryParams.email}
                                             placeholder="Email Пользователя"
                                             onBlur={e => searchFieldChanged('email', e.target.value)}
                                             onKeyPress={e => onKeyPress('email', e)}
-                                            /> 
+                                            />
                                         </th>
                                         <th className="px-3 py-3"></th>
                                         <th className="px-3 py-3"></th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     {users.data.map(user => (
                                         <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -128,7 +145,7 @@ export default function Index({ auth, users, queryParams = null, success }) {
                                                 </Link>
                                                 <button
                                                 onClick={e => deleteUser(user)}
-                                                 href={route("user.destroy", user.id)} 
+                                                 href={route("user.destroy", user.id)}
                                                  className="mx-1 font-medium text-red-600 dark:text-red-500 hover:underline">
                                                     Удалить
                                                 </button>

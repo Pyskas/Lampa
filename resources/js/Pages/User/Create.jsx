@@ -14,17 +14,17 @@ export default function Create({auth}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route('user.store'));
     }
-    
+
     return (
         <AuthenticatedLayout
-        user={auth.user} 
+        user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Создать нового пользователя</h2>
-            
+
             </div>
         }
         >

@@ -1,9 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-import { 
-    TASK_STATUS_CLASS_MAP, 
+import {
+    TASK_STATUS_CLASS_MAP,
     TASK_STATUS_TEXT_MAP,
-    TASK_PRIORITY_CLASS_MAP, 
+    TASK_PRIORITY_CLASS_MAP,
     TASK_PRIORITY_TEXT_MAP,
 } from "@/constants.jsx";
 
@@ -34,7 +34,7 @@ export default function Show({ auth,task,}) {
                                         <label className="text-lg font-bold">ID Правки:</label>
                                         <p className="mt-1">{task.id}</p>
                                     </div>
-                                    
+
                                     <div className="mt-4">
                                         <label className="text-lg font-bold">Название правки:</label>
                                         <p className="mt-1">{task.name}</p>
@@ -69,7 +69,7 @@ export default function Show({ auth,task,}) {
                                 </div>
                                 <div>
                                     <div>
-                                        <label className="text-lg font-bold">Дедлайн</label>
+                                        <label className="text-lg font-bold">Окончание</label>
                                         <p className="mt-1">{task.due_date}</p>
                                     </div>
                                     <div className="mt-4">
@@ -95,7 +95,7 @@ export default function Show({ auth,task,}) {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="mt-4">
                                 <label className="text-lg font-bold">Описание правки</label>
                                 <p className="mt-1">{task.description}</p>

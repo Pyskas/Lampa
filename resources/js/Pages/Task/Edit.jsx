@@ -21,17 +21,17 @@ export default function Create({ auth, task, projects, users }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route("task.update", task.id));
     }
-    
+
     return (
         <AuthenticatedLayout
-        user={auth.user} 
+        user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Редактировать правка "{task.name}"</h2>
-            
+
             </div>
         }
         >
@@ -46,7 +46,7 @@ export default function Create({ auth, task, projects, users }) {
                         <img src={task.image_path} className="w-64" />
                         </div>}
                         <div>
-                        <InputLabel htmlFor="task_project_id" 
+                        <InputLabel htmlFor="task_project_id"
                         value="Проект"
                         />
                         <SelectInput
@@ -66,11 +66,11 @@ export default function Create({ auth, task, projects, users }) {
                         className="mt-2" />
                     </div>
                     <div>
-                        <InputLabel 
-                        htmlFor="task_image_path" 
-                        value="Фото Правкаа" 
+                        <InputLabel
+                        htmlFor="task_image_path"
+                        value="Фото Правкаа"
                         />
-                        <TextInput 
+                        <TextInput
                         id="task_image_path"
                          type="file"
                           name="image"
@@ -111,9 +111,9 @@ export default function Create({ auth, task, projects, users }) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="task_due_date"
-                        value="Дедлайн"
+                        value="Окончание"
                         />
-                        
+
                         <TextInput
                         id="task_due_date"
                         type="date"
@@ -125,7 +125,7 @@ export default function Create({ auth, task, projects, users }) {
                         <InputError message={errors.due_date} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_status" 
+                        <InputLabel htmlFor="task_status"
                         value="Статус Правкаа"
                         />
                         <SelectInput
@@ -138,14 +138,13 @@ export default function Create({ auth, task, projects, users }) {
                             <option value="">Выберите статус</option>
                             <option value="pending">Рассматривается</option>
                             <option value="in_progress">В процессе</option>
-                            <option value="completed">Завершенные</option>
                         </SelectInput>
 
                         <InputError message={errors.task_status}
                         className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="task_priority" 
+                        <InputLabel htmlFor="task_priority"
                         value="Приоритет правки"
                         />
                         <SelectInput
@@ -164,26 +163,26 @@ export default function Create({ auth, task, projects, users }) {
                         <InputError message={errors.priority}
                         className="mt-2" />
                     </div>
-                    <div className="mt-4">
-                        <InputLabel htmlFor="task_assigned_user" 
-                        value="Назначенные пользователи"
-                        />
-                        <SelectInput
-                        name="assigned_user_id"
-                        id="task_assigned_user"
-                        value={data.assigned_user_id}
-                        className="block w-full mt-1"
-                        onChange={(e) => setData("assigned_user_id", e.target.value)}
-                        >
+                    {auth.user.role === 'admin' && (
+                        <div className="mt-4">
+                          <InputLabel htmlFor="task_assigned_user" value="Назначенные пользователи" />
+                          <SelectInput
+                            name="assigned_user_id"
+                            id="task_assigned_user"
+                            value={data.assigned_user_id}
+                            className="block w-full mt-1"
+                            onChange={(e) => setData("assigned_user_id", e.target.value)}
+                          >
                             <option value="">Выбрать пользователя</option>
                             {users.data.map(user => (
-                                <option value={user.id} key={user.id}>{user.name}</option>
+                              <option value={user.id} key={user.id}>{user.name}</option>
                             ))}
-                        </SelectInput>
+                          </SelectInput>
 
-                        <InputError message={errors.assigned_user_id}
-                        className="mt-2" />
-                    </div>
+                          <InputError message={errors.assigned_user_id} className="mt-2" />
+                        </div>
+                      )}
+
                     <div className="mt-4 text-right">
                         <Link href={route("task.index")} className="px-3 py-1 mr-2 text-gray-800 transition-all bg-gray-100 rounded shadow hover:bg-gray-200">
                             Отмена

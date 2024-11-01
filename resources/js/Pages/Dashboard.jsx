@@ -1,14 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
-import { 
-    TASK_STATUS_CLASS_MAP, 
+import {
+    TASK_STATUS_CLASS_MAP,
     TASK_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
 
 export default function Dashboard({auth, activeTasks, myPendingTasks, totalPendingTasks, totalProgressTasks, myProgressTasks, totalCompletedTasks, myCompletedTasks}) {
     return (
         <AuthenticatedLayout
-        // user={auth.user}
+         user={auth.user}
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                     Главная
@@ -27,7 +27,7 @@ export default function Dashboard({auth, activeTasks, myPendingTasks, totalPendi
                             </p>
                         </div>
                     </div>
-                    
+
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div className="p-6 text-gray-900 dark:text-gray-100">
                             <h3 className="text-2xl font-semibold text-blue-500">Правки в процессе</h3>
@@ -58,7 +58,7 @@ export default function Dashboard({auth, activeTasks, myPendingTasks, totalPendi
                                    <th className="px-3 py-3">Название проекта</th>
                                    <th className="px-3 py-3">Название</th>
                                    <th className="px-3 py-3">Статус</th>
-                                   <th className="px-3 py-3">Дедлайн</th>
+                                   <th className="px-3 py-3">Окончание</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,7 +83,7 @@ export default function Dashboard({auth, activeTasks, myPendingTasks, totalPendi
                     </div>
                 </div>
             </div>
-            
+
         </AuthenticatedLayout>
     );
 }

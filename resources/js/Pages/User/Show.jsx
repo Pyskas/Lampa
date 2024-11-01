@@ -1,10 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { 
-    USER_STATUS_CLASS_MAP, 
-    USER_STATUS_TEXT_MAP,
-} from "@/constants.jsx";
+import {
+  USER_STATUS_CLASS_MAP,
+  USER_STATUS_TEXT_MAP,
+} from '../../constants';
 import TasksTable from "../Task/TasksTable";
+
 
 export default function Show({ auth,user, tasks, queryParams}) {
     return (
@@ -29,7 +30,7 @@ export default function Show({ auth,user, tasks, queryParams}) {
                                         <label className="text-lg font-bold">ID Пользователя:</label>
                                         <p className="mt-1">{user.id}</p>
                                     </div>
-                                    
+
                                     <div className="mt-4">
                                         <label className="text-lg font-bold">Название Пользователя:</label>
                                         <p className="mt-1">{user.name}</p>
@@ -53,7 +54,7 @@ export default function Show({ auth,user, tasks, queryParams}) {
                                 </div>
                                 <div>
                                     <div>
-                                        <label className="text-lg font-bold">Дедлайн</label>
+                                        <label className="text-lg font-bold">Окончание</label>
                                         <p className="mt-1">{user.due_date}</p>
                                     </div>
                                     <div className="mt-4">
@@ -66,7 +67,7 @@ export default function Show({ auth,user, tasks, queryParams}) {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="mt-4">
                                 <label className="text-lg font-bold">Описание Пользователя</label>
                                 <p className="mt-1">{user.description}</p>

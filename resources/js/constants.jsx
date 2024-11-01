@@ -28,3 +28,14 @@ export const TASK_PRIORITY_TEXT_MAP = {
     'medium': 'Средний',
     'high': 'Высокий'
 }
+export const USER_STATUS_CLASS_MAP = {
+  active: 'status-active',
+  inactive: 'status-inactive',
+  // Добавь необходимые статусы
+};
+
+export const USER_STATUS_TEXT_MAP = {
+  active: 'Active',
+  inactive: 'Inactive',
+  // Добавь необходимые статусы
+};

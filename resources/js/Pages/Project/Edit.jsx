@@ -18,17 +18,17 @@ export default function Create({ auth, project }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route("project.update", project.id));
     }
-    
+
     return (
         <AuthenticatedLayout
-        user={auth.user} 
+        user={auth.user}
         header={
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Редактировать проект "{project.name}"</h2>
-            
+
             </div>
         }
         >
@@ -43,11 +43,11 @@ export default function Create({ auth, project }) {
                         <img src={project.image_path} className="w-64" />
                         </div>}
                     <div>
-                        <InputLabel 
-                        htmlFor="project_image_path" 
-                        value="Фото Проекта" 
+                        <InputLabel
+                        htmlFor="project_image_path"
+                        value="Фото Проекта"
                         />
-                        <TextInput 
+                        <TextInput
                         id="project_image_path"
                          type="file"
                           name="image"
@@ -57,7 +57,7 @@ export default function Create({ auth, project }) {
                          <InputError message={errors.image} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="project_name" value="Название проекта"/>
+                        <InputLabel htmlFor="project_name" value="Название проекта ✩"/>
                         <TextInput
                         id="project_name"
                         type="text"
@@ -88,9 +88,9 @@ export default function Create({ auth, project }) {
                     <div className="mt-4">
                         <InputLabel
                         htmlFor="project_due_date"
-                        value="Дедлайн"
+                        value="Окончание"
                         />
-                        
+
                         <TextInput
                         id="project_due_date"
                         type="date"
@@ -102,7 +102,7 @@ export default function Create({ auth, project }) {
                         <InputError message={errors.due_date} className="mt-2" />
                     </div>
                     <div className="mt-4">
-                        <InputLabel htmlFor="project_status" 
+                        <InputLabel htmlFor="project_status"
                         value="Статус Проекта"
                         />
                         <SelectInput
